@@ -1,36 +1,40 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { sql } from "drizzle-orm";
 import {
-  index,
-  pgTableCreator,
-  serial,
-  timestamp,
-  varchar,
+    integer,
+    pgTable,
+    serial, timestamp,
+    varchar,
 } from "drizzle-orm/pg-core";
 
-/**
- * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
- * database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
-export const createTable = pgTableCreator((name) => `next-asta-fantacalcio_${name}`);
-
-export const posts = createTable(
-  "post",
+export const players = pgTable('players',
   {
-    id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
-    ),
-  },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.name),
-  })
-);
+      idFantacalcio: integer('id_fantacalcio').primaryKey(),
+      name: varchar("name", { length: 256 }).notNull(),
+      role: varchar("role", { length: 1 }).notNull(),
+      squadra: varchar("squadra", { length: 100}).notNull().default('team'),
+    });
+
+export const teams = pgTable('teams',
+    {
+        id: serial('id').primaryKey(),
+        name: varchar("name", { length: 100 }).notNull(),
+    });
+
+export const players_teams = pgTable('players_teams',
+    {
+        id: serial('id').primaryKey(),
+        idFantacalcio: integer('id_fantacalcio').references(() => players.idFantacalcio).notNull().unique(),
+        idTeam: integer('id_team').references(() => teams.id).notNull(),
+        price: integer('price').notNull(),
+        buyAt: timestamp('buy_at').notNull().defaultNow(),
+    });
+
+export const configs = pgTable('configs',
+    {
+        id: serial('id').primaryKey(),
+        name: varchar('name', {length: 100}).notNull(),
+        value: integer('value').notNull(),
+    }
+)

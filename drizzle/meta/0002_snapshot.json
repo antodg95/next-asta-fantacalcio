@@ -1,0 +1,132 @@
+{
+  "id": "dce2decb-6e1f-4ed7-b8fa-70758f87780e",
+  "prevId": "af2b1d12-b575-4b0e-8b16-73aca90f39ec",
+  "version": "6",
+  "dialect": "postgresql",
+  "tables": {
+    "public.players": {
+      "name": "players",
+      "schema": "",
+      "columns": {
+        "idFantacalcio": {
+          "name": "idFantacalcio",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "varchar(1)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.players_teams": {
+      "name": "players_teams",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "idFantacalcio": {
+          "name": "idFantacalcio",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "idTeam": {
+          "name": "idTeam",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price": {
+          "name": "price",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "buyAt": {
+          "name": "buyAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "players_teams_idFantacalcio_players_idFantacalcio_fk": {
+          "name": "players_teams_idFantacalcio_players_idFantacalcio_fk",
+          "tableFrom": "players_teams",
+          "tableTo": "players",
+          "columnsFrom": [
+            "idFantacalcio"
+          ],
+          "columnsTo": [
+            "idFantacalcio"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "players_teams_idTeam_teams_id_fk": {
+          "name": "players_teams_idTeam_teams_id_fk",
+          "tableFrom": "players_teams",
+          "tableTo": "teams",
+          "columnsFrom": [
+            "idTeam"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.teams": {
+      "name": "teams",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

@@ -8,5 +8,5 @@ export default {
   dbCredentials: {
     url: env.DATABASE_URL,
   },
-  tablesFilter: ["next-asta-fantacalcio_*"],
+  tablesFilter: ["*"],
 } satisfies Config;
