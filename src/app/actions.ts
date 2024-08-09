@@ -129,7 +129,9 @@ export async function addPlayerToTeam(prevState: {formStatus: number,message: st
             .where(sql`${teams.id}=${idTeam}`)
             .groupBy(teams.id);
 
-        if (infoTeam && infoTeam.at(0) && Number(price) > infoTeam.at(0).creditsLeft) {
+        if (infoTeam && infoTeam.at(0) !== undefined) {
+            const creditsNonNull = infoTeam?.at(0)?.creditsLeft ?? 0;
+            if (Number(price) > creditsNonNull)
             return { formStatus: 1, message: "Crediti insufficienti" };
         }
 
