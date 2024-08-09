@@ -1,11 +1,14 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import { addPlayerToTeam } from "~/app/actions";
 import { CsvPlayer, Team } from "~/utils/types";
 
 export default function HomePageData ({players, teams}: {players:CsvPlayer[], teams:Team[]}) {
+
+  const modalRef = useRef<HTMLDialogElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const [filteredPlayers, setFilteredPlayers] = useState(players)
   const [searchItem, setSearchItem] = useState('')
@@ -59,16 +62,16 @@ export default function HomePageData ({players, teams}: {players:CsvPlayer[], te
   function openModal(playerId: number, playerName: string){
     setPlayerIdFantacalcio(playerId);
     setPlayerName(playerName);
-    window.my_modal_1.showModal();
+    modalRef.current?.showModal();
   }
 
   function closeModal() {
     formState.formStatus = 0
-    formState.message = ""
+    formState.message = "";
     setPlayerIdFantacalcio(0);
     setPlayerName('');
-    window.addPlayerToTeamForm.reset();
-    window.my_modal_1.close();
+    formRef.current?.reset();
+    modalRef.current?.close();
   }
 
   useEffect(() => {
@@ -76,20 +79,20 @@ export default function HomePageData ({players, teams}: {players:CsvPlayer[], te
 
     } 
     else if (formState.formStatus === 2) {
-      setShowSuccessAlert(true)
+      setShowSuccessAlert(true);
       setPlayerIdFantacalcio(0);
       setPlayerName('');
-      window.addPlayerToTeamForm.reset();
-      window.my_modal_1.close();
+      formRef.current?.reset();
+      modalRef.current?.close();
       setTimeout(() => {
         setShowSuccessAlert(false);
       }, 2000);
       
     }
     else {
-      formState.formStatus = 0
-      formState.message = ""
-      window.my_modal_1.close();
+      formState.formStatus = 0;
+      formState.message = "";
+      modalRef.current?.close();
     }
   }, [formState])
 
@@ -282,9 +285,9 @@ export default function HomePageData ({players, teams}: {players:CsvPlayer[], te
                   })}
                 </tbody>
               </table>
-              <dialog id="my_modal_1" className="modal modal-bottom sm:modal-middle">
+              <dialog id="modalRef" className="modal modal-bottom sm:modal-middle" ref={modalRef}>
                 <div className="modal-box" id="inner-modal">
-                  <form className="flex flex-col justify-center" action={addPlayerToTeamForm} id="addPlayerToTeamForm">
+                  <form className="flex flex-col justify-center" action={addPlayerToTeamForm} id="addPlayerToTeamForm" ref={formRef}>
                     <h1 className="text-center text-2xl font-bold mb-4">{playerName}</h1>
                     <input type="hidden" name="idFantacalcioPlayer" value={playerIdFantacalcio}></input>
                     <div>
