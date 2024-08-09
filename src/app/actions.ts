@@ -2,6 +2,7 @@
 
 import { eq, sql } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation';
 import Papa from 'papaparse';
 import {db} from "~/server/db";
@@ -49,6 +50,8 @@ export async function processCsv(
 }
 
 export async function addPlayerToTeam(prevState: {formStatus: number,message: string;}, formData: FormData) {
+
+    cookies().delete("addPlayerCookie")
 
     try {
 
@@ -142,6 +145,6 @@ export async function addPlayerToTeam(prevState: {formStatus: number,message: st
     }
 
     revalidatePath('/history')
-    revalidatePath('/')
+    cookies().set("addPlayerCookie","true")
     return { formStatus: 2, message: "Operazione eseguita con successo" };
 }

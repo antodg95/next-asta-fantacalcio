@@ -8,7 +8,6 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     const bought = db.select({idFantacalcio: players_teams.idFantacalcio}).from(players_teams);
     const playersOrdered = await db.select({name: players.name, role: players.role, idFantacalcio: players.idFantacalcio, team: players.squadra}).from(players)
         .where(notInArray(players.idFantacalcio, bought)).orderBy(sql`CASE ROLE WHEN 'P' THEN 1 WHEN 'D' THEN 2 WHEN 'C' THEN 3 WHEN 'A' THEN 4 ELSE 5 END, NAME asc`);

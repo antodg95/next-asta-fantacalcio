@@ -4,8 +4,46 @@ import { useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import { addPlayerToTeam } from "~/app/actions";
 import { CsvPlayer, Team } from "~/utils/types";
-
+import { useRouter } from "next/navigation";
 export default function HomePageData ({players, teams}: {players:CsvPlayer[], teams:Team[]}) {
+
+  const router = useRouter();
+
+  const initialFormState = {
+    formStatus: 0,
+    message: "",
+  }
+
+
+  function get_cookie(name: string){
+    const cookieName = document.cookie.split('; ')
+    .find(row => row.startsWith(name+'='))
+    ?.split('=')[1];
+    if (cookieName !== undefined) {
+      return cookieName
+    } else {
+      return ""
+    }
+}
+
+  useEffect(() => {
+    if (typeof document !== undefined) {
+        const cookies = document.cookie
+        const cookieAddPlayer = get_cookie("addPlayerCookie")
+        if (cookieAddPlayer === "true") {
+          setShowSuccessAlert(true);
+          setPlayerIdFantacalcio(0);
+          setPlayerName('');
+          formRef.current?.reset();
+          modalRef.current?.close();
+          setTimeout(() => {
+            setShowSuccessAlert(false);
+          }, 2000);
+          document.cookie = "addPlayerCookie=;expires=Thu, 01 Jan 1970 00:00:01 GMT";
+        }
+    }
+  }, [])
+  
 
   const modalRef = useRef<HTMLDialogElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -18,10 +56,7 @@ export default function HomePageData ({players, teams}: {players:CsvPlayer[], te
   const [showA, setShowA] = useState(true);
   const [playerIdFantacalcio, setPlayerIdFantacalcio] = useState(0);
   const [playerName, setPlayerName] = useState('');
-  const initialFormState = {
-    formStatus: 0,
-    message: "",
-  }
+
   const [formState, addPlayerToTeamForm] = useFormState(addPlayerToTeam, initialFormState);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
@@ -75,19 +110,12 @@ export default function HomePageData ({players, teams}: {players:CsvPlayer[], te
   }
 
   useEffect(() => {
-    if (formState.formStatus === 1) {
+    if (formState?.formStatus === 1) {
 
     } 
-    else if (formState.formStatus === 2) {
-      setShowSuccessAlert(true);
-      setPlayerIdFantacalcio(0);
-      setPlayerName('');
-      formRef.current?.reset();
+    else if (formState?.formStatus === 2) {
       modalRef.current?.close();
-      setTimeout(() => {
-        setShowSuccessAlert(false);
-      }, 2000);
-      
+      window.location.reload()
     }
     else {
       formState.formStatus = 0;
@@ -308,7 +336,7 @@ export default function HomePageData ({players, teams}: {players:CsvPlayer[], te
                     </div>
                     <input className="btn btn-primary mt-4" type="submit" value="Salva"></input>
                   </form>
-                  {formState.formStatus === 1 && <div role="alert" className="alert bg-red-300 mt-4">
+                  {formState?.formStatus === 1 && <div role="alert" className="alert bg-red-300 mt-4">
                                                  <span className="">{formState.message}</span>
                                                  </div>}
                   <div className="modal-action">
