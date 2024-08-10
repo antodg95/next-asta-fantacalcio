@@ -145,6 +145,7 @@ export async function addPlayerToTeam(prevState: {formStatus: number,message: st
     }
 
     revalidatePath('/history')
+    revalidatePath('/teams')
     cookies().set("addPlayerCookie","true")
     return { formStatus: 2, message: "Operazione eseguita con successo" };
 }
