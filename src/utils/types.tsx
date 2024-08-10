@@ -19,3 +19,21 @@ export type PlayerHistory = {
     idTeam: number,
     teamName: string
 }
+
+export type TeamFullInfo = {
+    creditsLeft: number,
+    teamId: number,
+    teamName: string,
+    D: number,
+    C: number,
+    A: number,
+}
+
+export type PlayerFullInfo = {
+    idFantacalcio: number,
+    name: string,
+    role: string,
+    squadra: string,
+    price: number,
+    idTeam: number
+}

@@ -148,3 +148,22 @@ export async function addPlayerToTeam(prevState: {formStatus: number,message: st
     cookies().set("addPlayerCookie","true")
     return { formStatus: 2, message: "Operazione eseguita con successo" };
 }
+
+export async function removePlayerFromTeam(prevState: {formStatus: number,message: string;}, formData: FormData) {
+    let idFantacalcioPlayer = formData.get('idFantacalcioPlayer');
+
+    if (idFantacalcioPlayer === null) {
+        return { formStatus: 1, message: "idFantacalcioPlayer è null" };
+    }
+
+    if (Number(idFantacalcioPlayer) <= 0) {
+        return { formStatus: 1, message: "idFantacalcioPlayer deve essere maggiore di 1" };
+    }
+
+    try {
+        await db.delete(players_teams).where(eq(players_teams.idFantacalcio, Number(idFantacalcioPlayer)));
+    }   catch (error) {
+        return { formStatus: 1, message: "Internal server error. Riprovare" }
+    } 
+    return { formStatus: 2, message: "Operazione eseguita con successo"}
+}

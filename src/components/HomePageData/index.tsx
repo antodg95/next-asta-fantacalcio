@@ -4,10 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import { addPlayerToTeam } from "~/app/actions";
 import { CsvPlayer, Team } from "~/utils/types";
-import { useRouter } from "next/navigation";
-export default function HomePageData ({players, teams}: {players:CsvPlayer[], teams:Team[]}) {
 
-  const router = useRouter();
+export default function HomePageData ({players, teams}: {players:CsvPlayer[], teams:Team[]}) {
 
   const initialFormState = {
     formStatus: 0,
@@ -220,7 +218,7 @@ export default function HomePageData ({players, teams}: {players:CsvPlayer[], te
               </div>
             </div>
           </div>
-          <div className="pb-20 z-0">
+          <div className="pb-20 px-6 z-0">
             <div className="w-full">
               <table className="w-full caption-bottom table-auto" id="players-table">
                 <thead className="border-b px-6">
