@@ -29,6 +29,27 @@ export default function HomePageData ({players, teams}: {players:CsvPlayer[], te
   useEffect(() => {
     if (typeof document !== undefined) {
         const cookies = document.cookie
+
+        const cookieP = get_cookie("P")
+        if (cookieP === "true" || cookieP ==="false") {
+          setShowP(cookieP == "true")
+        }
+
+        const cookieD = get_cookie("D")
+        if (cookieD === "true" || cookieD ==="false") {
+          setShowD(cookieD == "true")
+        }
+
+        const cookieC = get_cookie("C")
+        if (cookieC === "true" || cookieC ==="false") {
+          setShowC(cookieC == "true")
+        }
+
+        const cookieA = get_cookie("A")
+        if (cookieA === "true" || cookieA ==="false") {
+          setShowA(cookieA == "true")
+        }
+
         const cookieAddPlayer = get_cookie("addPlayerCookie")
         if (cookieAddPlayer === "true") {
           setShowSuccessAlert(true);
@@ -62,15 +83,19 @@ export default function HomePageData ({players, teams}: {players:CsvPlayer[], te
 
   function handleShowP(){
     setShowP(!showP)
+    document.cookie = "P="+!showP
   }
   function handleShowD(){
     setShowD(!showD)
+    document.cookie = "D="+!showD
   }
   function handleShowC(){
     setShowC(!showC)
+    document.cookie = "C="+!showC
   }
   function handleShowA(){
     setShowA(!showA)
+    document.cookie = "A="+!showA
   }
 
   function goTop() {
