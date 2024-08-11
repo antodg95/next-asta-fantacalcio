@@ -163,6 +163,8 @@ export async function removePlayerFromTeam(prevState: {formStatus: number,messag
 
     try {
         await db.delete(players_teams).where(eq(players_teams.idFantacalcio, Number(idFantacalcioPlayer)));
+        revalidatePath('/history')
+        revalidatePath('/teams')
     }   catch (error) {
         return { formStatus: 1, message: "Internal server error. Riprovare" }
     } 
