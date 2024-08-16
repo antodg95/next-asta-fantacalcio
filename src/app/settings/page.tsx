@@ -20,18 +20,23 @@ function SubmitButton() {
 export default function Settings(){
     const [state, formAction] = useFormState(processCsv, initialState);
     return (
-        <form encType='multipart/form-data' action={formAction} className="flex-row">
-            <input className="block w-full text-sm text-gray-500
-          file:mr-4 file:py-2 file:px-4
-          file:rounded-md file:border-0
-          file:text-sm file:font-semibold
-          file:bg-blue-500 file:text-white
-          hover:file:bg-blue-600 flex" type="file" name="file" accept=".csv"/>
-          <SubmitButton />
-          <p aria-live="polite" className="sr-only" role="status">
-          {state?.message}
-          </p>
-        </form>
+        <div>
+            <form encType='multipart/form-data' action={formAction} className="flex-row">
+                <input className="block w-full text-sm text-gray-500
+              file:mr-4 file:py-2 file:px-4
+              file:rounded-md file:border-0
+              file:text-sm file:font-semibold
+              file:bg-blue-500 file:text-white
+              hover:file:bg-blue-600 flex" type="file" name="file" accept=".csv" />
+                <SubmitButton />
+                <p aria-live="polite" className="sr-only" role="status">
+                    {state?.message}
+                </p>
+            </form>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onClick={() => window.location.href = '/api/download'}>
+                Esporta rose
+            </button>
+        </div>
     )
 }
 

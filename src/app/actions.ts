@@ -7,7 +7,8 @@ import { redirect } from 'next/navigation';
 import Papa from 'papaparse';
 import {db} from "~/server/db";
 import { configs, players, players_teams, teams } from "~/server/db/schema";
-import { CsvPlayer } from "~/utils/types";
+import { CoolObject, CsvPlayer } from "~/utils/types";
+import * as XLSX from "xlsx";
 
 export async function processCsv(
     prevState: {
