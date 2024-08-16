@@ -34,7 +34,7 @@ export default async function Teams() {
         <section className="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 lg:grid-cols-3 lg:p-6 mb-20">
             {infoTeams.map((infoTeam) => {
                 return (
-                    <Link href={"/teams/" + infoTeam.teamId} className="odd:bg-[#e0e7ff] even:bg-[#f5f5f5] border bg-card text-card-foreground relative overflow-hidden transition-transform duration-300 ease-in-out rounded-lg shadow-lg group hover:shadow-xl hover:-translate-y-2"
+                    <Link href={"/teams/" + infoTeam.teamId} key={infoTeam.teamId} className="odd:bg-[#e0e7ff] even:bg-[#f5f5f5] border bg-card text-card-foreground relative overflow-hidden transition-transform duration-300 ease-in-out rounded-lg shadow-lg group hover:shadow-xl hover:-translate-y-2"
                         data-v0-t="card"
                         style={{ cursor: "pointer" }}>
                             <div className="p-6">

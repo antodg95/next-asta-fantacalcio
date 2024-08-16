@@ -49,7 +49,7 @@ export default function HistoryTable({playerHistoryList}: {playerHistoryList:Pla
                                     
                                     <tr
                                         className="border-b"
-                                        onClick={() => router.push('/')}
+                                        onClick={() => router.push('/teams/' + playerHistory.idTeam)}
                                         style={{ cursor: "pointer" }}
                                         key={playerHistory.idFantacalcio}
                                     >
